@@ -142,27 +142,5 @@ app.post("/PostReview", async (req, res) => {
 })
 
 
-async function clearDataOnDay() {
-    try {
-        await client.connect();
-
-        const database = client.db(process.env.MONGO_DB_NAME);
-        const collection = database.collection(process.env.MONGO_COLLECTION);
-
-        // Remove all entries from the collection
-        const result = await collection.deleteMany({});
-
-        console.log(`Cleared Database: ${result}`);
-    } finally {
-        await client.close();
-    }
-}
-  
-// Run the function initially
-myFunction();
-
-// Schedule the function to run every 24 hours (86400000 milliseconds)
-const interval = setInterval(clearDataOnDay, 24 * 60 * 60 * 1000);
-
 
 app.listen(4000, () => console.log(`Running on port 4000`));
